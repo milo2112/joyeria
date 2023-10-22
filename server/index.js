@@ -5,7 +5,8 @@ const express = require('express')
 
 const {
   getJewels,
-  getJewelById
+  getJewelById,
+  getJewelFiltered
 } = require('../utils/getters')
 /*
 const {
@@ -26,6 +27,12 @@ app.get('/joyas', async (req, res) => {
 
 app.get('/joyas/joya/:id', async (req, res) => {
   getJewelById(req.params.id)
+    .then((dbResponse) => res.status(dbResponse?.code ? 500 : 200).json(dbResponse))
+    .catch(({ code, message }) => res.status(500).json({ code, message }))
+})
+
+app.get('/joyas/filtros', async (req, res) => {
+  getJewelFiltered(req.query)
     .then((dbResponse) => res.status(dbResponse?.code ? 500 : 200).json(dbResponse))
     .catch(({ code, message }) => res.status(500).json({ code, message }))
 })
