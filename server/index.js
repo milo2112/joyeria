@@ -8,30 +8,30 @@ const {
   getJewelById,
   getJewelFiltered
 } = require('../utils/getters')
-/*
+
 const {
-  HATEOAS
-} = require('../utils/provideHATEOAS')
-*/
+  activityReport
+} = require('../middleware')
+
 const PORT = process.env.PORT ?? 3000
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
-app.get('/joyas', async (req, res) => {
+app.get('/joyas', activityReport, async (req, res) => {
   getJewels(req.query)
     .then((dbResponse) => res.status(dbResponse?.code ? 500 : 200).json(dbResponse))
     .catch(({ code, message }) => res.status(500).json({ code, message }))
 })
 
-app.get('/joyas/joya/:id', async (req, res) => {
+app.get('/joyas/joya/:id', activityReport, async (req, res) => {
   getJewelById(req.params.id)
     .then((dbResponse) => res.status(dbResponse?.code ? 500 : 200).json(dbResponse))
     .catch(({ code, message }) => res.status(500).json({ code, message }))
 })
 
-app.get('/joyas/filtros', async (req, res) => {
+app.get('/joyas/filtros', activityReport, async (req, res) => {
   getJewelFiltered(req.query)
     .then((dbResponse) => res.status(dbResponse?.code ? 500 : 200).json(dbResponse))
     .catch(({ code, message }) => res.status(500).json({ code, message }))
