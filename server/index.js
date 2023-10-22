@@ -19,8 +19,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/joyas', async (req, res) => {
-  const queryStrings = req.query
-  getJewels(queryStrings)
+  getJewels(req.query)
     .then((dbResponse) => res.status(dbResponse?.code ? 500 : 200).json(dbResponse))
     .catch(({ code, message }) => res.status(500).json({ code, message }))
 })
