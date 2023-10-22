@@ -19,7 +19,22 @@ const getJewelById = async (id) => {
   return await executeQuery('SELECT * FROM inventario WHERE id = $1;', [id])
 }
 
+const getJewelFiltered = async ({ preciomax, preciomin, categoria, metal }) => {
+  const filters = []
+  let query = 'SELECT * from inventario'
+
+  if (preciomax) filters.push(`precio <= ${preciomax}`)
+  if (preciomin) filters.push(`precio >= ${preciomin}`)
+  if (categoria) filters.push(`categoria = '${categoria}'`)
+  if (metal) filters.push(`metal = '${metal}'`)
+
+  if (filters.length > 0) query += ` WHERE ${filters.join(' AND ')}`
+
+  return await executeQuery(query)
+}
+
 module.exports = {
   getJewels,
-  getJewelById
+  getJewelById,
+  getJewelFiltered
 }
