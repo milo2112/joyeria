@@ -24,12 +24,11 @@ const getJewelFiltered = async ({ preciomax, preciomin, categoria, metal }) => {
   const values = []
   let query = 'SELECT * from inventario'
 
-  if (preciomax) filters.push(`precio <= ${values.push(preciomax)}`)
-  if (preciomin) filters.push(`precio >= ${values.push(preciomin)}`)
-  if (categoria) filters.push(`categoria = '${values.push(categoria)}'`)
-  if (metal) filters.push(`metal = '${values.push(metal)}'`)
+  if (preciomax) filters.push(`precio <= $${values.push(preciomax)}`)
+  if (preciomin) filters.push(`precio >= $${values.push(preciomin)}`)
+  if (categoria) filters.push(`categoria = $${values.push(categoria)}`)
+  if (metal) filters.push(`metal = $${values.push(metal)}`)
   if (filters.length > 0) query += ` WHERE ${filters.join(' AND ')}`
-
   return await executeQuery(query, values)
 }
 
