@@ -1,9 +1,14 @@
 const activityReport = (req, _, next) => {
-  console.log('Method:', req.method)
-  console.log('Path:', req.path)
-  console.log('Params:', req.params)
-  console.log('Body:', req.body)
+  const activity = {
+    Report: 'User Activity App',
+    OriginalUrl: req.originalUrl,
+    Method: req.method,
+    Path: req.path,
+    Params: req.params,
+    QueryParams: req.query
+  }
   next()
+  return console.log(activity)
 }
 
 module.exports = {
